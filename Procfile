@@ -1,1 +1,1 @@
-gunicorn ad_hub.wsgi
+web: gunicorn ad_hub.wsgi
