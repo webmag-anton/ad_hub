@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',  # для работы allauth
+    'django.contrib.sites',
 
     # Third-party apps
     'allauth',
