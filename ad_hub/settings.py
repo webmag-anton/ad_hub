@@ -14,6 +14,9 @@ from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 if os.path.isfile('env.py'):
     import env
 
@@ -67,6 +70,7 @@ INSTALLED_APPS = [
 
     # Custom apps
     'ads',
+    'users',
 ]
 
 SITE_ID = 1
@@ -167,3 +171,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dtbubep8m',
+    'API_KEY': '627381546812149',
+    'API_SECRET': 'HWHCFSoYI8CZOmIHkjIltFkdu2k',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/media/'
