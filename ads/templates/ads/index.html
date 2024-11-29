@@ -2,33 +2,5 @@
 {% load static %}
 
 {% block content %}
-<h1>AdHub Home page</h1>
-
-<h1>User List</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Avatar</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.phone }}</td>
-            <td>
-                {% if user.avatar %}
-                <img src="{{ user.avatar.url }}" alt="Avatar" width="50" height="50">
-                {% else %}
-                No avatar
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<h1>Home page</h1>
 {% endblock content %}
