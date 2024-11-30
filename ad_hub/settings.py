@@ -69,8 +69,9 @@ INSTALLED_APPS = [
     'cloudinary',
 
     # Custom apps
-    'ads',
     'users',
+    'categories',
+    'ads',
 ]
 
 SITE_ID = 1

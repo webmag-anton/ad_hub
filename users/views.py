@@ -5,12 +5,7 @@ from .models import User
 from .forms import UserProfileForm
 
 
-def home_page(request):
-    return render(request, 'ads/index.html')
-
-
 def profile_page(request):
-    # users = User.objects.all()
     user = request.user
     context = {'user': user}
 
