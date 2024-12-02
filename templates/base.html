@@ -2,6 +2,7 @@
 
 {% url 'home' as home_url %}
 {% url 'profile' as profile_url %}
+{% url 'my_ads' as my_ads_url %}
 {% url 'account_login' as login_url %}
 {% url 'account_signup' as signup_url %}
 {% url 'account_logout' as logout_url %}
@@ -51,7 +52,18 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == profile_url %}active" aria-current="page{% endif %}" 
-                            href="{% url 'profile' %}">My profile</a>
+                            href="{% url 'profile' %}">
+                            My profile
+                            {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" alt="Avatar" width="50" height="50">
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == my_ads_url %}active" aria-current="page{% endif %}" 
+                            href="{% url 'my_ads' %}">
+                            My Ads
+                        </a>
                     </li>
                     {% else %}
                     <li class="nav-item">

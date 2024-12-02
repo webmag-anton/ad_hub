@@ -1,6 +1,13 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
+from .models import Ad
+from .models import AdImage
 
 
-def home_page(request):
-    return render(request, 'ads/index.html')
+@login_required
+def user_ads(request):
+    # ads = Ad.objects.all()
+    myAds = Ad.objects.filter(user=request.user).prefetch_related('images')
+    context = {'myAds': myAds}
+
+    return render(request, 'ads/index.html', context)

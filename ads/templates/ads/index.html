@@ -2,5 +2,30 @@
 {% load static %}
 
 {% block content %}
+<h1>My ads:</h1>
+
+<ul>
+{% for ad in myAds %}
+    <li>
+    User: {{ ad.user }} <br/>
+    Categories: {{ ad.categories }} <br/>
+    Title: {{ ad.title }} <br/>
+    Descr: {{ ad.description }} <br/>
+    Price: {{ ad.price }} <br/>
+    Created at: {{ ad.created_at }} <br/>
+    Updated at: {{ ad.updated_at }} <br/>
+    Ad's images: 
+        {% if ad.images.all %}
+            <div class="images">
+                {% for image in ad.images.all %}
+                    <img src="{{ image.image.url }}" alt="Image for {{ ad.title }}" width="200" height="200">
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No images available.</p>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
 
 {% endblock content %}

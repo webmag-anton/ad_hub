@@ -3,7 +3,7 @@ from .models import Category
 
 # Register your models here.
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'parent')
+    list_display = ('name', 'parent', 'image')
     search_fields = ('name',)
     list_filter = ('parent',)
 

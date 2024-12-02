@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 class Category(models.Model):
@@ -6,9 +7,10 @@ class Category(models.Model):
     parent = models.ForeignKey(
         'self', null=True, blank=True, related_name='subcategories', on_delete=models.CASCADE
     )
+    image = CloudinaryField('image', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = "Categories"
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name

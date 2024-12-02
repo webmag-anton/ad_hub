@@ -4,9 +4,15 @@
 {% block content %}
 <h1>Home page</h1>
 
+<h2>Categories:</h2>
 <ul>
-<!-- {% for category in categories %}
-    <li>{{ category.name }}</li> 
-{% endfor %} -->
+{% for category in categories %}
+{% if category.parent == None %}
+    <li>{{ category.name }}</li>
+    {% if category.image %}
+        <img src="{{ category.image.url }}" alt="{{ category.name }}">
+    {% endif %}
+{% endif %}
+{% endfor %}
 </ul>
 {% endblock content %}
