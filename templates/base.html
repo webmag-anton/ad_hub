@@ -15,9 +15,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Google Fonts CSS -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Hand:wght@400..700&family=Sixtyfour+Convergence&display=swap" rel="stylesheet">
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -29,55 +29,77 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">    
 </head>
 
-<body class="d-flex flex-column h-100 main-bg">
+<body class="d-flex flex-column h-100">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}"><span class="brand">c<span class="red-o">o</span>de<span
-                        class="thin">|star</span></span></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarText">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}"
-                            href="{% url 'home' %}">Home</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}" 
-                            href="{% url 'account_logout' %}">Logout</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == profile_url %}active" aria-current="page{% endif %}" 
-                            href="{% url 'profile' %}">
-                            My profile
-                            {% if user.avatar %}
-                            <img src="{{ user.avatar.url }}" alt="Avatar" width="50" height="50">
+    <div class="top-line">
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-expand-lg navbar-dark">
+                    <a class="navbar-brand brand" href="{% url 'home' %}">
+                        <svg width="100" height="90" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="gradientRed" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#f32222;stop-opacity:1"></stop>
+                                    <stop offset="100%" style="stop-color:#b71c1c;stop-opacity:1"></stop>
+                                </linearGradient>
+                            </defs>
+                            <rect x="20" y="0" width="60" height="70" fill="#000"></rect>
+                            <rect x="20" y="70" width="12" height="4" fill="white"></rect>
+                            <rect x="36" y="70" width="12" height="2" fill="white"></rect>
+                            <rect x="52" y="70" width="12" height="25" fill="white"></rect>
+                            <rect x="68" y="70" width="12" height="25" fill="white"></rect>
+                            <text x="50%" y="46" font-family="'Sixtyfour Convergence', sans-serif" font-size="19.5" fill="white" font-weight="bold" text-anchor="middle">
+                                AdHub
+                            </text>
+                        </svg>
+                    </a> 
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                        aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == home_url %}active" aria-current="page{% endif %}"
+                                    href="{% url 'home' %}">Home</a>
+                            </li>
+                            {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == my_ads_url %}active" aria-current="page{% endif %}" 
+                                    href="{% url 'my_ads' %}">
+                                    My Ads
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}" 
+                                    href="{% url 'account_logout' %}">Logout</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == profile_url %}active" aria-current="page{% endif %}" 
+                                    href="{% url 'profile' %}">
+                                    My profile
+                                    {% if user.avatar %}
+                                    <img class="nav-avatar" src="{{ user.avatar.url }}" alt="Avatar" width="50" height="50">
+                                    {% endif %}
+                                </a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == signup_url %}active" aria-current="page{% endif %}"
+                                    href="{% url 'account_signup' %}">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.path == login_url %}active" aria-current="page{% endif %}" href="{% url 'account_login' %}">
+                                    Login
+                                </a>
+                            </li>
                             {% endif %}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == my_ads_url %}active" aria-current="page{% endif %}" 
-                            href="{% url 'my_ads' %}">
-                            My Ads
-                        </a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == signup_url %}active" aria-current="page{% endif %}"
-                            href="{% url 'account_signup' %}">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == login_url %}active" aria-current="page{% endif %}" href="{% url 'account_login' %}">Login</a>
-                    </li>
-                    {% endif %}
-                </ul>
+                        </ul>
+                    </div>
+                </nav>
             </div>
         </div>
-    </nav>
+    </div>
 
     <!-- displaying Django messages -->
     <div class="container">
@@ -95,7 +117,7 @@
         </div>
     </div>
 
-    <main class="flex-shrink-0 main-bg">
+    <main class="flex-shrink-0">
         {% if user.is_authenticated %}
         <p class="text-end m-3">You are logged in as {{ user }}</p>
         {% else %}
@@ -106,10 +128,9 @@
         <!-- Content Goes here -->
         <p>This is my default paragraph</p>
         {% endblock content %}
-
     </main>
 
-    <footer class="footer mt-auto py-3 dark-bg">
+    <footer class="footer mt-auto py-3">
         <p class="m-0 text-center text-white">
             {% block copyright %}
                 copyright 2024

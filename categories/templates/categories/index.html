@@ -2,17 +2,31 @@
 {% load static %}
 
 {% block content %}
-<h1>Home page</h1>
+<section class="search">
+    <div class="container">
+        <div class="row">
+            <h1>search</h1>
+        </div>
+    </div>
+</section>
 
-<h2>Categories:</h2>
-<ul>
-{% for category in categories %}
-{% if category.parent == None %}
-    <li>{{ category.name }}</li>
-    {% if category.image %}
-        <img src="{{ category.image.url }}" alt="{{ category.name }}">
-    {% endif %}
-{% endif %}
-{% endfor %}
-</ul>
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <h1>Sections on the AdHub service:</h1>
+            <ul class="categories-wrapper">
+            {% for category in categories %}
+                {% if category.parent == None %}
+                <li class="category">
+                    {% if category.image %}
+                    <img class="category-img" src="{{ category.image.url }}" alt="{{ category.name }}">
+                    {% endif %}
+                    <h2 class="category-title">{{ category.name }}</h2>
+                </li> 
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
 {% endblock content %}

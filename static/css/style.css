@@ -1,23 +1,108 @@
+:root {
+  --main-color: #fff;
+  --accent-color: #dc3545;
+  --bg-color: #232020;
+  --bg-color-revert: #191919;
+  --bg-color-navbar: #323232;
+}
+
 body {
-    background-color: #F9FAFC;
+    position: relative;
+    font-family: "Edu AU VIC WA NT Hand", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    background-color: var(--bg-color);
+    color: var(--main-color);  
+}
+
+body::before {
+    content: "AdHub";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(71, 65, 56);
+    z-index: 8;
+}
+
+body::after {
+    content: "AdHub";
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(71, 65, 56);
+    z-index: 9;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+section {
+    padding: 40px 0;
+}
+
+h1, h2, h3 {
+    margin-bottom: 60px;
+    text-align: center;
+}
+
+.top-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-color-navbar);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .12), 0 1px 5px 0 rgba(0, 0, 0, .2);
+}
+
+.navbar {
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: var(--bg-color-navbar);
 }
 
 .brand {
-    font-family: Lato, sans-serif;
-    font-size: 1.4rem;
+    margin-bottom: -20px;
+}
+
+.navbar-nav {
+    margin-left: auto;
+    align-items: center;
+    line-height: 66px;
     font-weight: 700;
-    color: #4A4A4F;
 }
 
-.red-o {
-    color: #E84610;
+.navbar-nav .nav-item {
+    margin-left: 16px;
 }
 
-.thin {
-    font-weight: 300;
+.navbar-nav .nav-link {
+    font-size: 20px;
 }
 
-.light-bg {
+.navbar-dark .navbar-nav a.nav-link.active {
+    color: var(--accent-color);
+}
+
+.nav-avatar {
+    margin-left: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--accent-color);
+}
+
+/* .light-bg {
     background-color: #fff;
 }
 
@@ -26,8 +111,60 @@ body {
 }
 
 .main-bg {
-    background-color: #F9FAFC;
+    background-color: #787878;
+} */
+
+
+
+
+/* Search */
+
+.search {
+    height: 200px;
+    padding-top: 82px;
+    background-color: var(--bg-color-revert);
+    border-bottom: 1px solid #000;
 }
+
+/* Search END */
+
+
+
+/* Categories */
+
+.categories-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category {
+    width: 20%;
+    margin-bottom: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.category:hover .category-title {
+    transition: .1s ease;
+    color: var(--accent-color);
+}
+
+.category-img {
+    width: 90px;
+    max-width: 100%;
+}
+
+.category-title {
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 18px;
+}
+
+/* Categories END */
+
+
+
+
 
 .card {
     border: none;
