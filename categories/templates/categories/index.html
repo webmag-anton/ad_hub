@@ -15,7 +15,7 @@
         <div class="row">
             <h1>Categories:</h1>
             <div class="categories-wrapper">
-                <ul id="subcategories"></ul>
+                <div id="subcategories"></div>
             </div>
         </div>
     </div>
@@ -25,7 +25,9 @@
 
 {% block extras %}
 <script>
-const categoriesData = JSON.parse('{{ categories_data_json|escapejs }}');
+
+const categoriesData = JSON.parse('{{ categories_data_json|escapejs }}')
+let $activeCategory = undefined
 
 document.addEventListener('DOMContentLoaded', function() {
     const $wrapper = document.querySelector('.categories-wrapper')
@@ -33,39 +35,166 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const $categories = $wrapper.querySelectorAll('.category')
     const $subcategories = $wrapper.querySelector('#subcategories')
-    toggleSubcategories($categories, $subcategories)
+    addClickListener($categories, $subcategories)
+
+    // window.addEventListener('resize', () => {
+    //     $activeCategory && displaySubcategories($subcategories, $activeCategory)
+    // })
+    addResizeListener($subcategories, $activeCategory)
 })
 
 function renderCategories($container, data) {
     let innerHTML = ''
-    data.forEach(category => {
-        innerHTML += `<div class='category' data-category-name='${category.name}'>
-                ${category.image ? `<img class='category-img' src='${category.image}' alt='${category.name}'>` : ''}
+    data.forEach((category, ind) => {
+        innerHTML += 
+            `<div 
+                class='category' 
+                data-category-name='${category.name}' 
+                data-order='${ind}' 
+                style='order: ${ind};'
+            >
+                ${category.image 
+                    ? `<img 
+                        class='category-img' 
+                        src='${category.image}' 
+                        alt='${category.name}'
+                    >` 
+                    : ''}
                 <h2 class='category-title'>${category.name}</h2>
             </div>` 
     })
     $container.insertAdjacentHTML('afterbegin', innerHTML)
 }
 
-function toggleSubcategories($categories, $subcategories) {
-    $categories.forEach(function(item) {
-        item.addEventListener('click', function() {
-            const categoryName = this.dataset.categoryName
-            const selectedCategory = categoriesData.find(category => category.name === categoryName)
-
-            $subcategories.innerHTML = ''
-
-            if (selectedCategory && selectedCategory.subcategories.length > 0) {
-                selectedCategory.subcategories.forEach(subcategory => {
-                    const $li = document.createElement('li')
-                    $li.textContent = subcategory.name
-                    $subcategories.appendChild($li)
-                })
-            } else {
-                $subcategories.innerHTML = 'No subcategories found.'
+function addClickListener($categories, $subcategories) {
+    $categories.forEach($category => {
+        $category.addEventListener('click', 
+            () => {
+                displaySubcategories($subcategories, $category)
+                $activeCategory = $category
             }
-        })
+        )
     })
 }
+
+function addResizeListener($subcategories, $activeCategory) {
+    window.addEventListener('resize', () => {
+        $activeCategory && displaySubcategories($subcategories, $activeCategory)
+    })
+}
+
+function displaySubcategories($subcategories, $category) {
+    const categoryName = $category.dataset.categoryName
+    const selectedCategory = categoriesData.find(category => category.name === categoryName)
+    const subcategoriesOrder = getDerivedSubcategoriesOrder($category)
+    
+    $subcategories.style.order = subcategoriesOrder
+    $subcategories.style.opacity = 1
+    $subcategories.innerHTML 
+        = '<span class="category-pointer"></span><ul class="subcategories-list"></ul>'
+
+    const pointerShift = getPointerShift($category)     
+    const $pointer = $subcategories.querySelector('.category-pointer')   
+    $pointer.style.left = pointerShift
+
+    if (selectedCategory && selectedCategory.subcategories.length > 0) {
+        const $subcategoriesList = $subcategories.querySelector('ul.subcategories-list')
+
+        selectedCategory.subcategories.forEach(subcategory => {
+            const $li = document.createElement('li')
+            $li.textContent = subcategory.name
+            $subcategoriesList.appendChild($li)
+        })
+    } else {
+        $subcategories.innerHTML = 'No subcategories found.'
+    }
+}
+
+function getCategoryWidth($category) {
+    return getComputedStyle($category).getPropertyValue('--categories-percents-width')
+}
+
+function getPointerShift($category) {
+    const categoryOrder = $category.dataset.order
+    const categoryWidth = parseInt(getCategoryWidth($category))
+
+    const categoriesInRow = Math.round(100 / categoryWidth)
+    let orderInRow = (parseInt(categoryOrder) + 1) % categoriesInRow
+    orderInRow = orderInRow === 0 ? categoriesInRow : orderInRow
+    
+    return `${100 / categoriesInRow * orderInRow - categoryWidth / 2}%`
+}
+
+function getDerivedSubcategoriesOrder($category) {
+    const categoryOrder = $category.dataset.order
+    const categoryWidth = getCategoryWidth($category)
+        
+    if (categoryWidth === '20%') {
+        if (categoryOrder >= 0 && categoryOrder < 5) {
+            return 4
+        } else if (categoryOrder >= 5 && categoryOrder < 10) {
+            return 9
+        } else if (categoryOrder >= 10 && categoryOrder < 15) {
+            return 14
+        } else if (categoryOrder >= 15 && categoryOrder < 20) {
+            return 19
+        } else return 99
+    } else if (categoryWidth === '25%') {
+        if (categoryOrder >= 0 && categoryOrder < 4) {
+            return 3
+        } else if (categoryOrder >= 4 && categoryOrder < 8) {
+            return 7
+        } else if (categoryOrder >= 8 && categoryOrder < 12) {
+            return 11
+        } else if (categoryOrder >= 12 && categoryOrder < 16) {
+            return 15
+        } else if (categoryOrder >= 16 && categoryOrder < 20) {
+            return 19
+        } else return 99
+    } else if (categoryWidth === '33.333%') {
+        if (categoryOrder >= 0 && categoryOrder < 3) {
+            return 2
+        } else if (categoryOrder >= 3 && categoryOrder < 6) {
+            return 5
+        } else if (categoryOrder >= 6 && categoryOrder < 9) {
+            return 8
+        } else if (categoryOrder >= 9 && categoryOrder < 12) {
+            return 11
+        } else if (categoryOrder >= 12 && categoryOrder < 15) {
+            return 14
+        } else if (categoryOrder >= 15 && categoryOrder < 18) {
+            return 17
+        } else if (categoryOrder >= 18 && categoryOrder < 21) {
+            return 20
+        } 
+        else return 99
+    } else if (categoryWidth === '50%') {
+        if (categoryOrder >= 0 && categoryOrder < 2) {
+            return 1
+        } else if (categoryOrder >= 2 && categoryOrder < 4) {
+            return 3
+        } else if (categoryOrder >= 4 && categoryOrder < 6) {
+            return 5
+        } else if (categoryOrder >= 6 && categoryOrder < 8) {
+            return 7
+        } else if (categoryOrder >= 8 && categoryOrder < 10) {
+            return 9
+        } else if (categoryOrder >= 10 && categoryOrder < 12) {
+            return 11
+        } else if (categoryOrder >= 12 && categoryOrder < 14) {
+            return 13
+        } else if (categoryOrder >= 14 && categoryOrder < 16) {
+            return 15
+        } else if (categoryOrder >= 16 && categoryOrder < 18) {
+            return 17
+        } else if (categoryOrder >= 18 && categoryOrder < 20) {
+            return 19
+        } 
+        else return 99
+    } else if (categoryWidth === '100%') {
+        return categoryOrder
+    } else return 99
+}
+
 </script>
 {% endblock extras %}  
