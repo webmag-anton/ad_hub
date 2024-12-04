@@ -15,5 +15,6 @@ def category_list(request):
             'subcategories': [{'name': subcategory.name} for subcategory in subcategories]
         })
 
-    context = {'categories_data_json': json.dumps(categories_data)} # serialise data to JSON
+    # serialise data to JSON because of cloudinary images url
+    context = {'categories_data_json': json.dumps(categories_data)} 
     return render(request, 'categories/index.html', context)
