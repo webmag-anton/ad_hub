@@ -13,20 +13,59 @@
 <section class="categories">
     <div class="container">
         <div class="row">
-            <h1>Sections on the AdHub service:</h1>
-            <ul class="categories-wrapper">
-            {% for category in categories %}
-                {% if category.parent == None %}
-                <li class="category">
-                    {% if category.image %}
-                    <img class="category-img" src="{{ category.image.url }}" alt="{{ category.name }}">
-                    {% endif %}
-                    <h2 class="category-title">{{ category.name }}</h2>
-                </li> 
-                {% endif %}
-            {% endfor %}
-            </ul>
+            <h1>Categories:</h1>
+            <div class="categories-wrapper">
+                <ul id="subcategories"></ul>
+            </div>
         </div>
     </div>
 </section>
 {% endblock content %}
+
+
+{% block extras %}
+<script>
+const categoriesData = JSON.parse('{{ categories_data_json|escapejs }}');
+
+document.addEventListener('DOMContentLoaded', function() {
+    const $wrapper = document.querySelector('.categories-wrapper')
+    renderCategories($wrapper, categoriesData)
+
+    const $categories = $wrapper.querySelectorAll('.category')
+    const $subcategories = $wrapper.querySelector('#subcategories')
+    toggleSubcategories($categories, $subcategories)
+})
+
+function renderCategories($container, data) {
+    let innerHTML = ''
+    data.forEach(category => {
+        innerHTML += `<div class='category' data-category-name='${category.name}'>
+                ${category.image ? `<img class='category-img' src='${category.image}' alt='${category.name}'>` : ''}
+                <h2 class='category-title'>${category.name}</h2>
+            </div>` 
+    })
+    $container.insertAdjacentHTML('afterbegin', innerHTML)
+}
+
+function toggleSubcategories($categories, $subcategories) {
+    $categories.forEach(function(item) {
+        item.addEventListener('click', function() {
+            const categoryName = this.dataset.categoryName
+            const selectedCategory = categoriesData.find(category => category.name === categoryName)
+
+            $subcategories.innerHTML = ''
+
+            if (selectedCategory && selectedCategory.subcategories.length > 0) {
+                selectedCategory.subcategories.forEach(subcategory => {
+                    const $li = document.createElement('li')
+                    $li.textContent = subcategory.name
+                    $subcategories.appendChild($li)
+                })
+            } else {
+                $subcategories.innerHTML = 'No subcategories found.'
+            }
+        })
+    })
+}
+</script>
+{% endblock extras %}  
