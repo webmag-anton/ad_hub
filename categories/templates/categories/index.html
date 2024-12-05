@@ -37,10 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const $subcategories = $wrapper.querySelector('#subcategories')
     addClickListener($categories, $subcategories)
 
-    // window.addEventListener('resize', () => {
-    //     $activeCategory && displaySubcategories($subcategories, $activeCategory)
-    // })
-    addResizeListener($subcategories, $activeCategory)
+    window.addEventListener('resize', () => {
+        $activeCategory && displaySubcategories($subcategories, $activeCategory)
+    })
 })
 
 function renderCategories($container, data) {
@@ -77,15 +76,10 @@ function addClickListener($categories, $subcategories) {
     })
 }
 
-function addResizeListener($subcategories, $activeCategory) {
-    window.addEventListener('resize', () => {
-        $activeCategory && displaySubcategories($subcategories, $activeCategory)
-    })
-}
-
 function displaySubcategories($subcategories, $category) {
     const categoryName = $category.dataset.categoryName
-    const selectedCategory = categoriesData.find(category => category.name === categoryName)
+    const selectedCategory = categoriesData.find(category => 
+        category.name === categoryName)
     const subcategoriesOrder = getDerivedSubcategoriesOrder($category)
     
     $subcategories.style.order = subcategoriesOrder
@@ -101,9 +95,16 @@ function displaySubcategories($subcategories, $category) {
         const $subcategoriesList = $subcategories.querySelector('ul.subcategories-list')
 
         selectedCategory.subcategories.forEach(subcategory => {
-            const $li = document.createElement('li')
-            $li.textContent = subcategory.name
-            $subcategoriesList.appendChild($li)
+            $subcategoriesList.insertAdjacentHTML('beforeend', 
+                `<li>
+                    <a 
+                        class='subcategory-link'
+                        href='category/${subcategory.name}'
+                    >
+                        ${subcategory.name}
+                    </a>
+                </li>`
+            )
         })
     } else {
         $subcategories.innerHTML = 'No subcategories found.'
@@ -116,13 +117,13 @@ function getCategoryWidth($category) {
 
 function getPointerShift($category) {
     const categoryOrder = $category.dataset.order
-    const categoryWidth = parseInt(getCategoryWidth($category))
+    const categoryWidthInteger = parseInt(getCategoryWidth($category))
 
-    const categoriesInRow = Math.round(100 / categoryWidth)
+    const categoriesInRow = Math.round(100 / categoryWidthInteger)
     let orderInRow = (parseInt(categoryOrder) + 1) % categoriesInRow
     orderInRow = orderInRow === 0 ? categoriesInRow : orderInRow
     
-    return `${100 / categoriesInRow * orderInRow - categoryWidth / 2}%`
+    return `${100 / categoriesInRow * orderInRow - categoryWidthInteger / 2}%`
 }
 
 function getDerivedSubcategoriesOrder($category) {

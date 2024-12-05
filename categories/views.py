@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 import json
 from .models import Category
+from ads.models import Ad
+
 
 # Create your views here.
 def category_list(request):
@@ -18,3 +20,16 @@ def category_list(request):
     # serialise data to JSON because of cloudinary images url
     context = {'categories_data_json': json.dumps(categories_data)} 
     return render(request, 'categories/index.html', context)
+
+
+def ads_by_category(request, category_name):
+    category = get_object_or_404(Category, name=category_name)
+    ads = Ad.objects.filter(categories=category)
+    ads_count = ads.count()
+    
+    context = {
+        'category': category,
+        'ads': ads,
+        'ads_count': ads_count
+    }
+    return render(request, 'categories/ads_by_category.html', context)
