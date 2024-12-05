@@ -36,6 +36,7 @@ body {
     position: relative;
     font-family: "Edu AU VIC WA NT Hand", cursive;
     font-optical-sizing: auto;
+    font-size: 16px;
     font-weight: 400;
     font-style: normal;
     letter-spacing: 1px;
@@ -43,7 +44,7 @@ body {
     color: var(--main-color);  
 }
 
-/* body::before {
+body::before {
     content: "AdHub";
     position: fixed;
     top: 0;
@@ -63,7 +64,7 @@ body::after {
     left: 0;
     background-color: rgb(71, 65, 56);
     z-index: 9;
-} */
+}
 
 *::-webkit-scrollbar {
     width: 12px;
@@ -153,7 +154,7 @@ h1, h2, h3 {
     border: 1px solid var(--accent-color);
 }
 
-.light-bg {
+/* .light-bg {
     background-color: #fff;
 }
 
@@ -163,7 +164,7 @@ h1, h2, h3 {
 
 .main-bg {
     background-color: #787878;
-}
+} */
 
 
 
@@ -246,9 +247,18 @@ h1, h2, h3 {
 /* Categories END */
 
 
-/* Categories adds */
+/* Categories ads */
 
-.category-ads__ad {
+.category-ads__title {
+    color: var(--accent-color);
+}
+
+.category-ads__amount {
+    margin-bottom: 40px;
+    font-size: 20px;
+}
+
+.ads-list__ad {
     display: flex;
     height: 170px;
     padding: 8px;
@@ -256,21 +266,91 @@ h1, h2, h3 {
     background-color: #000;
 }
 
-.category-ads__ad:last-child {
+.ads-list__ad:hover .ads-list__category,
+.ads-list__ad:hover .ads-list__location-date,
+.ads-list__ad:hover .ads-list__price,
+.ads-list__ad:hover .ads-list__condition  {
+    color: var(--main-color);
+}
+
+.ads-list__ad:last-child {
     margin-bottom: 0;
 }
 
-.category-ads__image {
+.ads-list__ad p{
+    margin-bottom: 0;
+}
+
+.ads-list__image {
     width: 216px;
     height: 152px;
     object-fit: cover;
 }
 
-.category-ads__wrapper {
-    padding-left: 10px;
+.ads-list__wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(100% - 216px);
+    padding: 10px 190px 10px 15px;
 }
 
-/* Categories adds END */
+.ads-list__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ads-list__price {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+}
+
+.ads-list__condition {
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+    padding: 10px;
+    background-color: #393939;
+    border-radius: 10px;
+}
+
+.ads-list__location-date {
+    display: flex;
+    font-size: 12px;
+}
+
+.ads-list__location {
+    margin-right: 12px;
+}
+
+.ads-list__ad-categories {
+    display: flex;
+}
+
+.ads-list__category {
+    padding: 5px;
+    background-color: #393939;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-right: 4px;
+}
+
+/* Categories ads END */
+
+
+/* Ad */
+
+
+
+/* Ad END */
+
+
+
+
+
 
 
 

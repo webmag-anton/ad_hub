@@ -4,7 +4,6 @@ from .models import Category
 from ads.models import Ad
 
 
-# Create your views here.
 def category_list(request):
     top_level_categories = Category.objects.filter(parent__isnull=True)
     
