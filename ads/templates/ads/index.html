@@ -2,78 +2,120 @@
 {% load static %}
 
 {% block content %}
+<section class="single-ad">
+    <div class="container">
+        <div class="row">
+            <div class="ad">
+                <div class="ad__lest-side">
+                    <div class="ad__box">
+                        {% if ad.images.all %}
+                        <div id="ad-carousel" class="carousel slide">
+                            <div class="carousel-indicators">
+                                {% for image in ad.images.all %}
+                                <button 
+                                    class="{% if forloop.first %}active{% endif %}"
+                                    type="button" 
+                                    data-bs-target="#ad-carousel" 
+                                    data-bs-slide-to="{{ forloop.counter0 }}" 
+                                    aria-label="Slide {{ forloop.counter1 }}"
+                                >
+                                </button>
+                                {% endfor %}
+                            </div>
+                            <div class="carousel-inner">
+                                {% for image in ad.images.all %}
+                                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                                <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ ad.title }}">
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#ad-carousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#ad-carousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        {% else %}
+                            <img 
+                                class="ad-images__image" 
+                                src="{% static 'images/photo-placeholder.svg' %}" 
+                                alt="{{ ad.title }}"
+                            >
+                        {% endif %}
+                    </div>
+                    <div class="ad__box">
+                        <ul class="ad__categories">
+                            {% for category in ad.categories.all %}
+                            <li class="ad__category">
+                                <a href="/category/{{ category.name }}">
+                                    {{ category.name }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>   
+                        <div class="ad__description">
+                            <h3 class="ad__description-title">Description:</h3>
+                            <p class="ad__description-text">
+                                {{ ad.description }}
+                            </p>
+                        </div>
+                    </div>
+                </div>   
 
-<!-- User: {{ ad.user }} <br/>
-Categories: {{ ad.categories }} <br/>
-Title: {{ ad.title }} <br/>
-Descr: {{ ad.description }} <br/>
-Price: {{ ad.price }} <br/>
-Created at: {{ ad.created_at }} <br/>
-Updated at: {{ ad.updated_at }} <br/>
-Ad's images: 
-    {% if ad.images.all %}
-        <div class="images">
-            {% for image in ad.images.all %}
-                <img src="{{ image.image.url }}" alt="Image for {{ ad.title }}" width="200" height="200">
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No images available.</p>
-    {% endif %} -->
+                <div class="ad__right-side">
+                    <div class="ad__box">
+                        <div class="ad__title">
+                            {{ ad.title }}
+                        </div>
+                        <div class="ad-price-wrapper">
+                            <div class="ad__price">
+                                {{ ad.price }}€
+                            </div>
+                            <div class="ad__condition">
+                                {{ ad.condition }}
+                            </div>
+                        </div>
+                        <div class="ad__creatied-date">
+                            published: {{ ad.created_at|date:"F j, Y" }} at  {{ ad.created_at|date:"H:i" }}
+                        </div>
+                        <div class="ad__updated-date">
+                            updated: {{ ad.updated_at|date:"F j, Y" }} at  {{ ad.updated_at|date:"H:i" }}
+                        </div>
+                    </div>
 
+                    <div class="ad__box">
+                        <div class="ad__location">
+                            <i class="fa-solid fa-location-dot"></i> {{ ad.location }}
+                        </div>   
+                    </div>
 
-<div class="ad">
-    <div class="ad__lest-side">
-        <div class="ad-images">
-            {% if ad.images.all %}
-                {% for image in ad.images.all %}
-                <img class="ad-images__image" src="{{ image.image.url }}" alt="{{ ad.title }}">
-                {% endfor %}
-            {% else %}
-                <img 
-                    class="ad-images__image" 
-                    src="{% static 'images/photo-placeholder.svg' %}" 
-                    alt="{{ ad.title }}"
-                >
-            {% endif %}
-        </div>
-        <div class="ad__box">
-            <ul class="ad__categories">
-                {% for category in ad.categories.all %}
-                <li class="ad__category">
-                    {{ category.name }}
-                </li>
-                {% endfor %}
-            </ul>   
-            <div class="ad__description">
-                <h3 class="ad__description-title">Description:</h3>
-                <p class="ad__description-text">
-                    {{ ad.description }}
-                </p>
+                    <div class="ad__box">
+                        <div class="ad-user">
+                            <img 
+                                class="ad-user__avatar" 
+                                src="{% if ad.user.avatar %} {{ ad.user.avatar.url }} {% else %} {% static 'images/avatar-placeholder.svg' %} {% endif %}" 
+                                alt="Avatar" 
+                                width="50" 
+                                height="50"
+                            >
+                            <p class="ad-user__name">{{ ad.user.username }}</p>
+                            <p class="ad-user__email">email: {{ ad.user.email }}</p>
+                            <p class="ad-user__phone">phone: {{ ad.user.phone }}</p>
+                            <p class="ad-user__joined">on AdHub since {{ ad.user.date_joined|date:"F j, Y" }}</p>
+                            <p class="ad-user__last-login">online: {{ ad.user.last_login|date:"F j, Y H:i" }}</p>
+                            <a href="/ads/user/{{ ad.user.id }}" class="ad-user__ads-link">
+                                <button type="button" class="btn btn-light ad-user__ads-btn">
+                                    all ads by the author
+                                </button>
+                            </a>
+                        </div>   
+                    </div>
+                </div> 
             </div>
         </div>
-    </div>   
-    <div class="ad__right-side">
-        <div class="ad__box">
-            <div class="ad__title">
-                {{ ad.title }}
-            </div>
-            <div class="ad__price">
-                {{ ad.price }}
-            </div>
-        </div>
-        
-        <div class="ad__box">
-            <div class="ad__user">
-            
-            </div>   
-        </div>
-        
-        <div class="ad__box">
-            <div class="ad__location">
-            
-            </div>   
-        </div>
-    </div> 
-</div>
+    </div>
+</section>          
 {% endblock content %}

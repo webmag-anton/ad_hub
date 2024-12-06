@@ -16,7 +16,7 @@
             <h2 class="category-ads__title">{{ category.name }}</h2>
 
             {% if ads %}
-                <p class="category-ads__amount">Found {{ ads_count }} ad(s) in this category:</p>
+                <p class="category-ads__amount">Found {{ ads_count }} ad{% if ads_count > 1 %}s{% endif %} in this category:</p>
                 
                 <div class="category-ads__list ads-list">
                     {% for ad in ads %}

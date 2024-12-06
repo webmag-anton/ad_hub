@@ -2,16 +2,24 @@
 {% load static %}
 
 {% block content %}
-<section class="my-ads">
+<section class="user-ads">
     <div class="container">
         <div class="row">
-            <h2>My ads:</h2>
+            <h2>{{ user.username }}'s ads:</h2>
 
-            {% if myAds %}
-                <p class="my-ads__amount">You have {{ myAds_count }} ad{% if myAds_count > 1 %}s{% endif %}:</p>
+            {% if userAds %}
+                <img 
+                    class="user__avatar" 
+                    src="{% if user.avatar %} {{ user.avatar.url }} {% else %} {% static 'images/avatar-placeholder.svg' %} {% endif %}" 
+                    alt="Avatar" 
+                    width="50" 
+                    height="50"
+                >
+
+                <p class="user-ads__amount">{{ user.username }} has {{ userAds_count }} ad{% if userAds_count > 1 %}s{% endif %}:</p>
                 
-                <div class="my-ads__list ads-list">
-                    {% for ad in myAds %}
+                <div class="user-ads__list ads-list">
+                    {% for ad in userAds %}
                         <a class='ads-list__ad' href='/ads/{{ ad.slug }}'>
                             <img 
                                 class="ads-list__image" 
@@ -38,7 +46,7 @@
                     {% endfor %}
                 </div> 
             {% else %}
-                <p class="category-ads__amount">You don't have own ads yet...</p>
+                <p class="category-ads__amount">{{ user.username }} doesn't have own ads yet...</p>
             {% endif %}
         </div>
     </div>
