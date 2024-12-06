@@ -8,7 +8,7 @@
             <h2>My ads:</h2>
 
             {% if myAds %}
-                <p class="my-ads__amount">You have {{ myAds_count }} ad{% if myAds_count > 1 %}s{% endif %}:</p>
+                <p class="my-ads__amount">I have {{ myAds_count }} ad{% if myAds_count > 1 %}s{% endif %}:</p>
                 
                 <div class="my-ads__list ads-list">
                     {% for ad in myAds %}
@@ -31,7 +31,10 @@
                                 <p class="ads-list__price">{{ ad.price }}€</p>
                                 <div class="ads-list__location-date">
                                     <p class="ads-list__location"><i class="fa-solid fa-location-dot"></i> {{ ad.location }}</p>
-                                    <p class="ads-list__created"><i class="fa-regular fa-calendar"></i> {{ ad.created_at|date:"F j, Y" }}</p>
+                                    <p class="ads-list__created">
+                                        <i class="fa-solid fa-upload"></i> 
+                                        {{ ad.created_at|date:"F j, Y" }} at {{ ad.created_at|date:"H:i" }}
+                                    </p>
                                 </div>
                             </div> 
                         </a>

@@ -261,6 +261,7 @@ h1, h2, h3 {
 
 .category-ads__amount {
     margin-bottom: 40px;
+    padding-left: 16px;
     font-size: 20px;
 }
 
@@ -391,6 +392,12 @@ h1, h2, h3 {
     background-color: var(--accent-color);
 }
 
+.ad-images__image {
+    display: block;
+    width: 50%;
+    margin: 0 auto;
+}
+
 .ad__categories {
     display: flex;
     flex-wrap: wrap;
@@ -412,12 +419,20 @@ h1, h2, h3 {
     text-transform: uppercase;
 }
 
+.sticky-container {
+    position: sticky;
+    top: 92px;
+    height: calc(100vh - 82px);
+    overflow-y: auto;
+}
+
 .ad__title {
     margin-top: 6px;
     margin-bottom: 30px;
     font-weight: 600;
     letter-spacing: 2.5px;
     text-align: center;
+    color: var(--accent-color);
 }
 
 .ad-price-wrapper {
@@ -439,7 +454,11 @@ h1, h2, h3 {
 .ad__creatied-date {
     margin-top: 30px; 
     margin-bottom: 5px;
- }
+}
+
+.ad__updated-date {
+    margin-top: 10px;
+} 
  
 .ad__creatied-date,
 .ad__updated-date {
@@ -448,6 +467,7 @@ h1, h2, h3 {
 
 .ad__location i {
     margin-right: 10px;
+    color: var(--accent-color);
 } 
 
 .ad-user__avatar {
@@ -457,9 +477,37 @@ h1, h2, h3 {
     border: 1px solid var(--accent-color);
 }
 
+.ad-user__name {
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.ad-user__email span,
+.ad-user__phone span {
+    text-decoration: underline;
+}
+
+.ad-user__last-login {
+    position: relative;
+    padding-left: 10px;
+}
+
+.ad-user__last-login::before {
+    position: absolute;
+    left: 0;
+    top: 60%;
+    transform: translateY(-50%);
+    display: block;
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: aquamarine;
+}
+
 .ad-user__ads-btn {
     display: block;
-    margin: 30px auto 10px;
+    margin: 40px auto 10px;
     font-weight: 600;
 }
 
@@ -467,11 +515,22 @@ h1, h2, h3 {
     color: var(--accent-color);
 }
 
-
 /* Ad END */
 
 
-/* user ads */
+/* My ads */
+
+.my-ads__amount, 
+.user-ads__amount {
+    margin-bottom: 40px;
+    padding-left: 16px;
+    font-size: 20px;
+}
+
+/* My ads END */
+
+
+/* User ads */
 
 .user__avatar {
     display: block;
@@ -482,7 +541,7 @@ h1, h2, h3 {
     border: 1px solid var(--accent-color);
 }
 
-/* user ads END */
+/* User ads END */
 
 
 

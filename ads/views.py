@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from datetime import timedelta
+from django.utils import timezone
 from .models import Ad
 from .models import AdImage
 from users.models import User
@@ -18,11 +20,11 @@ def my_ads(request):
 
 
 def user_ads(request, id):
-    user = get_object_or_404(User, id=id)
-    userAds = Ad.objects.filter(user=user).prefetch_related('images')
+    info_user = get_object_or_404(User, id=id)
+    userAds = Ad.objects.filter(user=info_user).prefetch_related('images')
     userAds_count = userAds.count()
     context = {
-        'user': user,
+        'info_user': info_user,
         'userAds': userAds, 
         'userAds_count': userAds_count
     }
@@ -31,8 +33,12 @@ def user_ads(request, id):
 
 
 def get_ad(request, slug):
-    # Ad.objects.get(slug=slug)
     ad = get_object_or_404(Ad, slug=slug)
-    context = {'ad': ad}
+    now = timezone.now()
+    time_difference_in_minutes = (ad.updated_at - ad.created_at).total_seconds() / 60 if ad.updated_at and ad.created_at else 0
+    context = {
+        'ad': ad,
+        'time_difference_in_minutes': time_difference_in_minutes,
+    }
 
     return render(request, 'ads/index.html', context)    

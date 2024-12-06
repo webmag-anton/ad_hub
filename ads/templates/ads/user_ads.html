@@ -5,18 +5,18 @@
 <section class="user-ads">
     <div class="container">
         <div class="row">
-            <h2>{{ user.username }}'s ads:</h2>
+            <h2>{{ info_user.username }}'s ads:</h2>
 
             {% if userAds %}
                 <img 
                     class="user__avatar" 
-                    src="{% if user.avatar %} {{ user.avatar.url }} {% else %} {% static 'images/avatar-placeholder.svg' %} {% endif %}" 
+                    src="{% if info_user.avatar %} {{ info_user.avatar.url }} {% else %} {% static 'images/avatar-placeholder.svg' %} {% endif %}" 
                     alt="Avatar" 
                     width="50" 
                     height="50"
                 >
 
-                <p class="user-ads__amount">{{ user.username }} has {{ userAds_count }} ad{% if userAds_count > 1 %}s{% endif %}:</p>
+                <p class="user-ads__amount">{{ info_user.username }} has {{ userAds_count }} ad{% if userAds_count > 1 %}s{% endif %}:</p>
                 
                 <div class="user-ads__list ads-list">
                     {% for ad in userAds %}
@@ -39,14 +39,17 @@
                                 <p class="ads-list__price">{{ ad.price }}€</p>
                                 <div class="ads-list__location-date">
                                     <p class="ads-list__location"><i class="fa-solid fa-location-dot"></i> {{ ad.location }}</p>
-                                    <p class="ads-list__created"><i class="fa-regular fa-calendar"></i> {{ ad.created_at|date:"F j, Y" }}</p>
+                                    <p class="ads-list__created">
+                                        <i class="fa-solid fa-upload"></i> 
+                                        {{ ad.created_at|date:"F j, Y" }} at {{ ad.created_at|date:"H:i" }}
+                                    </p>
                                 </div>
                             </div> 
                         </a>
                     {% endfor %}
                 </div> 
             {% else %}
-                <p class="category-ads__amount">{{ user.username }} doesn't have own ads yet...</p>
+                <p class="category-ads__amount">{{ info_user.username }} has not created any ads yet...</p>
             {% endif %}
         </div>
     </div>
