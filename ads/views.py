@@ -1,10 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from datetime import timedelta
 from django.utils import timezone
-from .models import Ad
-from .models import AdImage
+from django.contrib import messages
+from datetime import timedelta
+from .models import Ad, AdImage
 from users.models import User
+from .forms import AdForm, AdImageForm
 
 
 @login_required
@@ -42,3 +43,40 @@ def get_ad(request, slug):
     }
 
     return render(request, 'ads/index.html', context)    
+
+
+@login_required
+def create_ad(request):
+    if request.method == 'POST':
+        ad_form = AdForm(request.POST)
+        image_form = AdImageForm(request.POST, request.FILES)
+        
+        if ad_form.is_valid() and image_form.is_valid():
+            ad = ad_form.save(commit=False)
+            ad.user = request.user
+            if not ad.description or ad.description.strip() == '':
+                ad.description = 'No description'
+            ad.save()
+
+            ad_form.save_m2m()
+
+            for img in request.FILES.getlist('image'):
+                AdImage.objects.create(ad=ad, image=img)
+
+            messages.add_message(
+                request, messages.SUCCESS,
+                'Add created !!!'
+            )
+            return redirect('my_ads')
+        else:
+            messages.error(request, "There was an error in the form submission.")    
+    else:
+        ad_form = AdForm()
+        image_form = AdImageForm()
+
+    context = {
+        'ad_form': ad_form,
+        'image_form': image_form
+    }
+
+    return render(request, 'ads/index.html', context)

@@ -62,9 +62,9 @@
                         </ul>   
                         <div class="ad__description">
                             <h3 class="ad__description-title">Description:</h3>
-                            <p class="ad__description-text">
-                                {{ ad.description }}
-                            </p>
+                            <div class="ad__description-text">
+                                {{ ad.description|safe }}
+                            </div>
                         </div>
                     </div>
                 </div>   
