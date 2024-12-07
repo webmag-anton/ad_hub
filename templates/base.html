@@ -76,7 +76,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {% if request.path == logout_url %}active" aria-current="page{% endif %}" 
-                                    href="{% url 'account_logout' %}">Logout</a>
+                                    href="{% url 'account_logout' %}"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {% if request.path == profile_url %}active" aria-current="page{% endif %}" 
@@ -172,21 +172,17 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Подключаем форму -->
                     <form method="POST" enctype="multipart/form-data" action="{% url 'create_ad' %}">
                         {% csrf_token %}
-                        {{ ad_form|crispy }}  <!-- crispy-стилизация формы объявления -->
+                        {{ ad_form|crispy }}  <!-- crispy-styles -->
                         
-                        <label for="{{ image_form.image.id_for_label }}">Upload Images</label>
-                        {{ image_form.image }}  <!-- Поле для загрузки изображений -->
-                        <label for="{{ image_form.image.id_for_label }}">Upload Images</label>
-                        {{ image_form.image }}  <!-- Поле для загрузки изображений -->
-                        <label for="{{ image_form.image.id_for_label }}">Upload Images</label>
-                        {{ image_form.image }}  <!-- Поле для загрузки изображений -->
-                        <label for="{{ image_form.image.id_for_label }}">Upload Images</label>
-                        {{ image_form.image }}  <!-- Поле для загрузки изображений -->
-                        <label for="{{ image_form.image.id_for_label }}">Upload Images</label>
-                        {{ image_form.image }}  <!-- Поле для загрузки изображений -->
+                        <!-- <label for="{{ image_form.image.id_for_label }}">Upload Images</label> -->
+                        <p>You can upload up to 5 photos</p>
+                        {{ image_form.image }}
+                        {{ image_form.image }}
+                        {{ image_form.image }}
+                        {{ image_form.image }}
+                        {{ image_form.image }}
                     
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>

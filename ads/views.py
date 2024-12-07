@@ -10,7 +10,7 @@ from .forms import AdForm, AdImageForm
 
 @login_required
 def my_ads(request):
-    myAds = Ad.objects.filter(user=request.user).prefetch_related('images')
+    myAds = Ad.objects.filter(user=request.user).order_by('-created_at').prefetch_related('images')
     myAds_count = myAds.count()
     context = {
         'myAds': myAds, 
@@ -22,7 +22,7 @@ def my_ads(request):
 
 def user_ads(request, id):
     info_user = get_object_or_404(User, id=id)
-    userAds = Ad.objects.filter(user=info_user).prefetch_related('images')
+    userAds = Ad.objects.filter(user=info_user).order_by('-created_at').prefetch_related('images')
     userAds_count = userAds.count()
     context = {
         'info_user': info_user,
@@ -80,3 +80,19 @@ def create_ad(request):
     }
 
     return render(request, 'ads/index.html', context)
+
+
+@login_required
+def delete_ad(request, slug):
+    ad = get_object_or_404(Ad, slug=slug)
+
+    if ad.user != request.user:
+        messages.error(request, "You are not authorized to delete this ad.")
+        return redirect('')
+
+    if request.method == 'POST':
+        ad.delete()
+        messages.success(request, "Your ad has been successfully deleted.")
+        return redirect('my_ads')
+
+    return render(request, 'ads/index.html', {'ad': ad})    

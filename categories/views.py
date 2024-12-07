@@ -23,7 +23,7 @@ def category_list(request):
 
 def ads_by_category(request, category_name):
     category = get_object_or_404(Category, name=category_name)
-    ads = Ad.objects.filter(categories=category)
+    ads = Ad.objects.filter(categories=category).order_by('-created_at')
     ads_count = ads.count()
     
     context = {

@@ -3,6 +3,7 @@ from .models import Ad, AdImage
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django_summernote.widgets import SummernoteWidget
+from categories.models import Category
 
 
 class AdForm(forms.ModelForm):
@@ -15,6 +16,7 @@ class AdForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['categories'].queryset = Category.objects.filter(parent__isnull=False)
         self.helper = FormHelper()
         self.helper.form_method = 'POST'
         self.helper.add_input(Submit('submit', 'Create Ad'))   

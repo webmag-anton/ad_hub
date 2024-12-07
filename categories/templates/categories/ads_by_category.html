@@ -35,7 +35,7 @@
                                     </li>
                                     {% endfor %}
                                 </ul>
-                                <span class="ads-list__condition">{{ ad.get_condition_display }}</span>
+                                <span class="ads-list__condition"><span>condition:</span> {{ ad.get_condition_display }}</span>
                                 <p class="ads-list__price">{{ ad.price }}€</p>
                                 <div class="ads-list__location-date">
                                     <p class="ads-list__location"><i class="fa-solid fa-location-dot"></i> {{ ad.location }}</p>
