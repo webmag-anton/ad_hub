@@ -158,8 +158,10 @@ USE_I18N = True
 USE_TZ = True
 
 MESSAGE_TAGS = {
-    messages.SUCCESS: 'alert-success',
-    messages.ERROR: 'alert-danger',
+    messages.SUCCESS: 'toast-success',
+    messages.ERROR: 'toast-danger',
+    messages.WARNING: 'toast-warning',
+    messages.INFO: 'toast-info'
 }
 
 # Static files (CSS, JavaScript, Images)

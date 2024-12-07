@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% url 'delete_ad' %}
+{% url 'edit_ad' ad.slug %}
 
 {% block content %}
 <section class="single-ad">
@@ -132,7 +134,7 @@
                             </div>   
                         </div>
 
-                        {% if request.user == ad.user %}
+                        {% if user.is_authenticated and request.user == ad.user %}
                         <div class="ad__box">
                             <div class="ad-control-btns">
                                 <!-- <button id="edit-ad" type="button" class="btn btn-warning">
@@ -150,6 +152,15 @@
                                 </form> -->
 
                                 <button 
+                                    id="edit-ad" 
+                                    type="submit" 
+                                    class="btn btn-warning"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#edit-ad-modal"
+                                >
+                                    <i class="fa-solid fa-pencil"></i> Edit
+                                </button>
+                                <button 
                                     id="delete-ad" 
                                     type="submit" 
                                     class="btn btn-danger"
@@ -158,7 +169,6 @@
                                 >
                                     <i class="fa-solid fa-trash-can"></i> Delete
                                 </button>
-                                
                             </div>
                         </div>
                         {% endif %}
@@ -169,6 +179,7 @@
     </div>
 </section> 
 
+{% if user.is_authenticated and request.user == ad.user %}
 <div class="modal fade" id="delete-ad-modal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -189,4 +200,41 @@
         </div>
     </div>
 </div>
+
+<div class="create-edit-ad-modal modal fade" id="edit-ad-modal" tabindex="-1" aria-labelledby="editAdModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editAdModalLabel">Edit Ad</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data" action="{% url 'edit_ad' ad.slug %}">
+                    {% csrf_token %}
+                    {{ ad_form|crispy }}
+
+                    <p>You can upload up to 5 photos</p>
+
+                    {% for image in existing_images %}
+                    <div class="existing-image">
+                        <img src="{{ image.image.url }}" alt="Current Image" class="img-thumbnail" />
+                        <div class="mb-4">
+                            <input type="checkbox" name="delete_image_{{ image.id }}" id="delete_image_{{ image.id }}">
+                            <label class="delete-image-label" for="delete_image_{{ image.id }}">Delete this image</label>
+                        </div>
+                        
+                    </div>
+                    {% endfor %}
+
+                    {% for i in remaining_range %}
+                        {{ image_form.image }}
+                    {% endfor %}
+                    
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock content %}

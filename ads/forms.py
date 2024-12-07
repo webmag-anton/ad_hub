@@ -23,6 +23,8 @@ class AdForm(forms.ModelForm):
      
 
 class AdImageForm(forms.ModelForm):
+    delete_image = forms.BooleanField(required=False, label='Delete this image', initial=False)
+
     class Meta:
         model = AdImage
-        fields = ['image']
+        fields = ['image', 'delete_image']

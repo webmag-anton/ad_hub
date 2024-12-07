@@ -35,11 +35,22 @@ def user_ads(request, id):
 
 def get_ad(request, slug):
     ad = get_object_or_404(Ad, slug=slug)
+    existing_images = ad.images.all()
+    remaining_images = 5 - existing_images.count()
+    remaining_range = range(remaining_images)
+    ad_form = AdForm(instance=ad)
+    image_form = AdImageForm()
     now = timezone.now()
     time_difference_in_minutes = (ad.updated_at - ad.created_at).total_seconds() / 60 if ad.updated_at and ad.created_at else 0
+
     context = {
         'ad': ad,
         'time_difference_in_minutes': time_difference_in_minutes,
+        # for edit form in popup:
+        'ad_form': ad_form,
+        'image_form': image_form,
+        'existing_images': existing_images,
+        'remaining_range': remaining_range,
     }
 
     return render(request, 'ads/index.html', context)    
@@ -96,3 +107,43 @@ def delete_ad(request, slug):
         return redirect('my_ads')
 
     return render(request, 'ads/index.html', {'ad': ad})    
+
+
+@login_required
+def edit_ad(request, slug):
+    ad = get_object_or_404(Ad, slug=slug)
+
+    if ad.user != request.user:
+        messages.error(request, "You are not authorized to edit this ad.")
+        return redirect('')
+
+    if request.method == 'POST':
+        ad_form = AdForm(request.POST, instance=ad)
+        image_form = AdImageForm(request.POST, request.FILES)
+        
+        if ad_form.is_valid() and image_form.is_valid():
+            ad_form.save()
+
+            for image_instance in ad.images.all():
+                delete_image_key = f'delete_image_{image_instance.id}'
+                if delete_image_key in request.POST:
+                    image_instance.delete()
+
+            for img in request.FILES.getlist('image'):
+                AdImage.objects.create(ad=ad, image=img)
+
+            messages.success(request, "Ad updated successfully!")
+            return redirect('ad', slug=ad.slug)
+        else:
+            messages.error(request, "There was an error updating the ad.")
+    else:
+        ad_form = AdForm(instance=ad)
+        image_form = AdImageForm()
+
+    context = {
+        'ad_form': ad_form,
+        'image_form': image_form,
+        'ad': ad,
+    }
+
+    return render(request, 'ads/index.html', context)    
