@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.core.paginator import Paginator
 import json
 from .models import Category
 from ads.models import Ad
@@ -25,10 +26,15 @@ def ads_by_category(request, category_name):
     category = get_object_or_404(Category, name=category_name)
     ads = Ad.objects.filter(categories=category).order_by('-created_at')
     ads_count = ads.count()
+    paginator = Paginator(ads, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
     context = {
         'category': category,
         'ads': ads,
-        'ads_count': ads_count
+        'ads_count': ads_count,
+        'page_obj': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
     }
     return render(request, 'categories/ads_by_category.html', context)

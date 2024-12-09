@@ -700,6 +700,10 @@ h1, h2, h3 {
     color: var(--main-color);
 }
 
+.ad-control-btns .btn:focus {
+    box-shadow: none;
+}
+
 #edit-ad {
     background-color: #8b6c0f;
     border-color: #8b6c0f;
@@ -771,6 +775,44 @@ h1, h2, h3 {
 
 /* User ads END */
 
+
+/* pagination */
+
+.pagination-navigation {
+    margin-top: 30px;
+}
+
+.pagination li {
+    margin: 0 15px;
+}
+
+.pagination .page-link {
+    border-radius: 3px;
+    border-color: transparent;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.pagination .page-link:hover {
+    background-color: var(--accent-color);
+    color: var(--main-color);
+}
+
+.pagination .page-link:focus {
+    box-shadow: none;
+}
+
+/* pagination END */
+
+
+/* search results */
+
+.search-results__count span {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+/* search results END */
 
 
 
@@ -860,7 +902,7 @@ h1, h2, h3 {
 
 .btn-signup,
 .btn-edit {
-    background-color: #188181;
+    background-color: #10683f;
     color: #fff;
 }
 
@@ -877,7 +919,7 @@ h1, h2, h3 {
 
 .link:hover,
 .link:active {
-    color: #445261;
+    color: var(--main-color);
     text-decoration: underline;
 }
 

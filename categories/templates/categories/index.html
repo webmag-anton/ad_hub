@@ -13,7 +13,10 @@
 <section class="search">
     <div class="container">
         <div class="row">
-            <h1>search</h1>
+            <form method="GET" action="{% url 'search_ads' %}">
+                <input type="text" name="q" placeholder="Search ads..." value="{{ query }}">
+                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            </form>
         </div>
     </div>
 </section>

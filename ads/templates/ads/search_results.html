@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="search-results">
+        <div class="container">
+            <div class="row">
+                <h2>Search Results:</h2>
+
+                {% if ads %}
+                    <p class="search-results__count">{{ ads.count }} result{% if ads_count > 1 %}s{% endif %} found for <span>'{{ query }}'</span>:</p>
+                    <div class="ads-list">
+                        {% for ad in ads %}
+                            <a class='ads-list__ad' href='/ads/{{ ad.slug }}'>
+                                <img 
+                                    class="ads-list__image" 
+                                    src="{% if ad.images.all %}{{ ad.images.all.0.image.url }}{% else %}{% static 'images/photo-placeholder.svg' %}{% endif %}" 
+                                    alt="{{ ad.title }}"
+                                >
+                                <div class="ads-list__wrapper">
+                                    <p class="ads-list__title">{{ ad.title }}</p>
+                                    <ul class="ads-list__ad-categories">
+                                        {% for category in ad.categories.all %}
+                                        <li class="ads-list__category">
+                                            {{ category.name }}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    <span class="ads-list__condition"><span>condition:</span> {{ ad.get_condition_display }}</span>
+                                    <p class="ads-list__price">{{ ad.price }}€</p>
+                                    <div class="ads-list__location-date">
+                                        <p class="ads-list__location"><i class="fa-solid fa-location-dot"></i> {{ ad.location }}</p>
+                                        <p class="ads-list__created">
+                                            <i class="fa-solid fa-upload"></i> 
+                                            {{ ad.created_at|date:"F j, Y" }} at {{ ad.created_at|date:"H:i" }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No results found for '{{ query }}'.</p>
+                {% endif %}
+            </div>    
+        </div>
+    </section>
+{% endblock %}

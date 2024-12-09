@@ -19,7 +19,7 @@
                 <p class="category-ads__amount">{{ ads_count }} ad{% if ads_count > 1 %}s{% endif %} in this category:</p>
                 
                 <div class="category-ads__list ads-list">
-                    {% for ad in ads %}
+                    {% for ad in page_obj %}
                         <a class='ads-list__ad' href='/ads/{{ ad.slug }}'>
                             <img 
                                 class="ads-list__image" 
@@ -50,6 +50,19 @@
                 </div> 
             {% else %}
                 <p class="category-ads__amount">There are no ads in this category yet...</p>
+            {% endif %}
+
+            {% if is_paginated %}
+            <nav class="pagination-navigation" aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV</a></li>
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
             {% endif %}
         </div>
     </div>

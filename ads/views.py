@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
 from datetime import timedelta
 from .models import Ad, AdImage
 from users.models import User
@@ -12,9 +14,14 @@ from .forms import AdForm, AdImageForm
 def my_ads(request):
     myAds = Ad.objects.filter(user=request.user).order_by('-created_at').prefetch_related('images')
     myAds_count = myAds.count()
+    paginator = Paginator(myAds, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'myAds': myAds, 
-        'myAds_count': myAds_count
+        'myAds_count': myAds_count,
+        'page_obj': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
     }
 
     return render(request, 'ads/my_ads.html', context)
@@ -24,10 +31,15 @@ def user_ads(request, id):
     info_user = get_object_or_404(User, id=id)
     userAds = Ad.objects.filter(user=info_user).order_by('-created_at').prefetch_related('images')
     userAds_count = userAds.count()
+    paginator = Paginator(userAds, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'info_user': info_user,
         'userAds': userAds, 
-        'userAds_count': userAds_count
+        'userAds_count': userAds_count,
+        'page_obj': page_obj,
+        'is_paginated': page_obj.has_other_pages(),
     }
 
     return render(request, 'ads/user_ads.html', context)    
@@ -147,3 +159,24 @@ def edit_ad(request, slug):
     }
 
     return render(request, 'ads/index.html', context)    
+
+
+def search_ads(request):
+    query = request.GET.get('q')
+    if query:
+        ads = Ad.objects.filter(
+            Q(title__icontains=query) | 
+            Q(description__icontains=query)
+        ).order_by('-created_at')
+    else:
+        ads = Ad.objects.all().order_by('-created_at')
+
+    ads_count = ads.count()    
+    
+    context = {
+        'ads': ads,
+        'query': query,
+        'ads_count': ads_count
+    }
+
+    return render(request, 'ads/search_results.html', context)

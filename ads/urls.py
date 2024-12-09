@@ -7,5 +7,6 @@ urlpatterns = [
     path('create/', views.create_ad, name='create_ad'),
     path('delete/<slug:slug>/', views.delete_ad, name='delete_ad'),
     path('edit/<slug:slug>/', views.edit_ad, name='edit_ad'),
+    path('search/', views.search_ads, name='search_ads'),
     path('<slug:slug>/', views.get_ad, name='ad'),
 ]
