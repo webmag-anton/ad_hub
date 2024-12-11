@@ -7,16 +7,16 @@
     <div class="container">
       <div class="row">
         <h2>Edit Profile</h2>
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button 
-          type="submit" 
-          id="edit-profile__btn" 
-          class="btn btn-success">
-            Save changes
-        </button>
-      </form>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button 
+            type="submit" 
+            id="edit-profile__btn" 
+            class="btn btn-success">
+              Save changes
+          </button>
+        </form>
       </div>
     </div>
   </section>

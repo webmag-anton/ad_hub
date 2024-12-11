@@ -1,7 +1,9 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from allauth.account.forms import SignupForm
 from .models import User
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
@@ -14,3 +16,16 @@ class UserProfileForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Save Profile'))
+
+
+class CustomSignupForm(SignupForm):
+    avatar = forms.ImageField(
+        required=False, 
+        label="Avatar (optional)"
+    )
+
+    def save(self, request):
+        user = super(CustomSignupForm, self).save(request)
+        user.avatar = self.cleaned_data.get('avatar')
+        user.save()
+        return user

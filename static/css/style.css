@@ -56,28 +56,6 @@ body {
     font-weight: 600;   
 }
 
-/* body::before {
-    content: "AdHub";
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgb(71, 65, 56);
-    z-index: 8;
-}
-
-body::after {
-    content: "AdHub";
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: rgb(71, 65, 56);
-    z-index: 9;
-} */
-
 *::-webkit-scrollbar {
     width: 12px;
     height: 8px;
@@ -212,6 +190,7 @@ h1, h2, h3 {
     margin-left: 10px;
     border-radius: 50%;
     border: 1px solid var(--accent-color);
+    object-fit: cover;
 }
 
 
@@ -876,18 +855,43 @@ h1, h2, h3 {
     color: #e4e4e4;
 }
 
+.profile-avatar {
+    object-fit: cover;
+}
+
 #edit-profile__btn {
     font-weight: 500;
 }
 
 #profile-edit-btn {
+    margin-top: 30px;
     align-self: center;
     padding: 20px;
-    background-color: #ffc107;
-    border-color: #ffc107;
+    background-color: #8b6c0f;
+    border-color: #8b6c0f;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+#profile-edit-btn:hover {
+    background-color: #a38018;
+    color: var(--main-color);
 }
 
 /* edit profile END */
+
+
+/* footer */
+
+.footer__social-icons {
+    font-size: 30px;
+}
+
+.footer__social-icons a {
+    margin: 0 20px;
+}
+
+/* footer */
 
 
 
@@ -1026,4 +1030,6 @@ h1, h2, h3 {
 
 .footer {
     background-color: var(--bg-color-black);
+    padding: 25px 0;
 }
+

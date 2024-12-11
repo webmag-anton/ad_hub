@@ -14,7 +14,7 @@
                 <p class="profile-phone">Phone: {{ user.phone }}</p>
                 <div><p>Avatar:</p>
                     {% if user.avatar %}
-                        <img src="{{ user.avatar.url }}" alt="Avatar" width="200" height="200">
+                        <img class="profile-avatar" src="{{ user.avatar.url }}" alt="Avatar" width="200" height="200">
                     {% else %}
                         <p>No avatar yet...</p>
                     {% endif %}
