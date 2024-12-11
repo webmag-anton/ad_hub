@@ -137,20 +137,6 @@
                         {% if user.is_authenticated and request.user == ad.user %}
                         <div class="ad__box">
                             <div class="ad-control-btns">
-                                <!-- <button id="edit-ad" type="button" class="btn btn-warning">
-                                    <i class="fa-solid fa-pencil"></i> Edit
-                                </button>
-                                <form 
-                                    id="delete-ad-form" 
-                                    method="POST"
-                                    action="{% url 'delete_ad' ad.slug %}"
-                                >
-                                    {% csrf_token %}
-                                    <button id="delete-ad" type="submit" class="btn btn-danger">
-                                        <i class="fa-solid fa-trash-can"></i> Delete
-                                    </button>
-                                </form> -->
-
                                 <button 
                                     id="edit-ad" 
                                     type="submit" 

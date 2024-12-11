@@ -13,9 +13,16 @@
 <section class="search">
     <div class="container">
         <div class="row">
-            <form method="GET" action="{% url 'search_ads' %}">
-                <input type="text" name="q" placeholder="Search ads..." value="{{ query }}">
-                <button type="submit"><i class="fa-solid fa-magnifying-glass"></i> Search</button>
+            <form id="search-form" method="GET" action="{% url 'search_ads' %}">
+                <input 
+                    id="search-form__input" 
+                    type="text" name="q" 
+                    placeholder="search ads by title or description..." 
+                    value="{{ query }}"
+                >
+                <button id="search-form__btn" type="submit">
+                    Search <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
             </form>
         </div>
     </div>
@@ -94,7 +101,7 @@ function displaySubcategories($subcategories, $category) {
     const subcategoriesOrder = getDerivedSubcategoriesOrder($category)
     
     $subcategories.style.order = subcategoriesOrder
-    $subcategories.style.opacity = 1
+    $subcategories.style.display = 'block'
     $subcategories.innerHTML 
         = '<span class="category-pointer"></span><ul class="subcategories-list"></ul>'
 
