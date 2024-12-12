@@ -16,7 +16,8 @@
             <form id="search-form" method="GET" action="{% url 'search_ads' %}">
                 <input 
                     id="search-form__input" 
-                    type="text" name="q" 
+                    type="text" 
+                    name="q" 
                     placeholder="search ads by title or description..." 
                     value="{{ query }}"
                 >

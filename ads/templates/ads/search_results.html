@@ -2,6 +2,25 @@
 {% load static %}
 
 {% block content %}
+    <section class="search">
+        <div class="container">
+            <div class="row">
+                <form id="search-form" method="GET" action="{% url 'search_ads' %}">
+                    <input 
+                        id="search-form__input" 
+                        type="text" 
+                        name="q" 
+                        placeholder="search ads by title or description..." 
+                        value="{{ query }}"
+                    >
+                    <button id="search-form__btn" type="submit">
+                        Search <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <section class="search-results">
         <div class="container">
             <div class="row">
@@ -19,6 +38,8 @@
                                 >
                                 <div class="ads-list__wrapper">
                                     <p class="ads-list__title">{{ ad.title }}</p>
+                                    <p class="ads-list__price">{{ ad.price }}€</p>
+                                    <span class="ads-list__condition"><span>condition:</span> {{ ad.get_condition_display }}</span>
                                     <ul class="ads-list__ad-categories">
                                         {% for category in ad.categories.all %}
                                         <li class="ads-list__category">
@@ -26,8 +47,6 @@
                                         </li>
                                         {% endfor %}
                                     </ul>
-                                    <span class="ads-list__condition"><span>condition:</span> {{ ad.get_condition_display }}</span>
-                                    <p class="ads-list__price">{{ ad.price }}€</p>
                                     <div class="ads-list__location-date">
                                         <p class="ads-list__location"><i class="fa-solid fa-location-dot"></i> {{ ad.location }}</p>
                                         <p class="ads-list__created">
@@ -40,7 +59,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    <p>No results found for '{{ query }}'.</p>
+                    <p class="search-results__empty">No results found for <span>'{{ query }}'</span>.</p>
                 {% endif %}
             </div>    
         </div>

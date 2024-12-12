@@ -28,6 +28,8 @@
                             >
                             <div class="ads-list__wrapper">
                                 <p class="ads-list__title">{{ ad.title }}</p>
+                                <p class="ads-list__price">{{ ad.price }}€</p>
+                                <span class="ads-list__condition">{{ ad.get_condition_display }}</span>
                                 <ul class="ads-list__ad-categories">
                                     {% for category in ad.categories.all %}
                                     <li class="ads-list__category">
@@ -35,8 +37,6 @@
                                     </li>
                                     {% endfor %}
                                 </ul>
-                                <span class="ads-list__condition">{{ ad.get_condition_display }}</span>
-                                <p class="ads-list__price">{{ ad.price }}€</p>
                                 <div class="ads-list__location-date">
                                     <p class="ads-list__location"><i class="fa-solid fa-location-dot"></i> {{ ad.location }}</p>
                                     <p class="ads-list__created">
