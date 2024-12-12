@@ -307,7 +307,7 @@ h1, h2, h3 {
     height: 32px;  
 }
 
-.create-edit-ad-modal #id_image {
+.create-edit-ad-modal .input_image {
     display: block;
     margin-top: 15px;
     font-size: 16px;
@@ -1105,7 +1105,7 @@ h1, h2, h3 {
         max-width: none;
     }
 
-    .create-edit-ad-modal #id_image {
+    .create-edit-ad-modal .input_image {
         font-size: 20px;
     }
 }

@@ -22,9 +22,25 @@ class AdForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Create Ad'))   
      
 
+class FileInputNoId(forms.ClearableFileInput):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.attrs.pop('id', None)
+
+    def render(self, name, value, attrs=None, renderer=None):
+        if attrs is None:
+            attrs = {}
+        attrs.pop('id', None)
+        attrs['class'] = 'input_image'
+        return super().render(name, value, attrs, renderer)
+
+
 class AdImageForm(forms.ModelForm):
     delete_image = forms.BooleanField(required=False, label='Delete this image', initial=False)
 
     class Meta:
         model = AdImage
         fields = ['image', 'delete_image']
+        widgets = {
+            'image': FileInputNoId()
+        }

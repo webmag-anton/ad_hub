@@ -88,7 +88,7 @@ def create_ad(request):
 
             messages.add_message(
                 request, messages.SUCCESS,
-                'Add created !!!'
+                'You have created a new ad!'
             )
             return redirect('my_ads')
         else:

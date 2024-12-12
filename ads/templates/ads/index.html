@@ -88,19 +88,19 @@
                                 </div>
                             </div>
                             {% if time_difference_in_minutes <= 10 %}
-                                <div class="ad__creatied-date">
-                                    <i class="fa-solid fa-upload"></i>
-                                    published: {{ ad.created_at|date:"F j, Y" }} at {{ ad.created_at|date:"H:i" }}
-                                </div>
+                            <div class="ad__creatied-date">
+                                <i class="fa-solid fa-upload"></i>
+                                published: {{ ad.created_at|date:"F j, Y" }} at {{ ad.created_at|date:"H:i" }}
+                            </div>
                             {% else %}
-                                <div class="ad__creatied-date">
-                                    <i class="fa-solid fa-upload"></i>
-                                    published: {{ ad.created_at|date:"F j, Y" }} at {{ ad.created_at|date:"H:i" }}
-                                </div>
-                                <div class="ad__updated-date">
-                                    <i class="fa-solid fa-pencil"></i> 
-                                    updated: {{ ad.updated_at|date:"F j, Y" }} at {{ ad.updated_at|date:"H:i" }}
-                                </div>
+                            <div class="ad__creatied-date">
+                                <i class="fa-solid fa-upload"></i>
+                                published: {{ ad.created_at|date:"F j, Y" }} at {{ ad.created_at|date:"H:i" }}
+                            </div>
+                            <div class="ad__updated-date">
+                                <i class="fa-solid fa-pencil"></i> 
+                                updated: {{ ad.updated_at|date:"F j, Y" }} at {{ ad.updated_at|date:"H:i" }}
+                            </div>
                             {% endif %}
                         </div>
 
@@ -125,11 +125,11 @@
                                 <p class="ad-user__joined">on AdHub since {{ ad.user.date_joined|date:"F j, Y" }}</p>
                                 <p class="ad-user__last-login">online: {{ ad.user.last_login|date:"F j, Y H:i" }}</p>
                                 {% if request.user != ad.user %}
-                                    <a href="/ads/user/{{ ad.user.id }}" class="ad-user__ads-link">
-                                        <button type="button" class="btn btn-light ad-user__ads-btn">
-                                            all {{ ad.user.username }}'s ads
-                                        </button>
-                                    </a>
+                                <a href="/ads/user/{{ ad.user.id }}" class="ad-user__ads-link">
+                                    <button type="button" class="btn btn-light ad-user__ads-btn">
+                                        all {{ ad.user.username }}'s ads
+                                    </button>
+                                </a>
                                 {% endif %}
                             </div>   
                         </div>
@@ -208,7 +208,6 @@
                             <input type="checkbox" name="delete_image_{{ image.id }}" id="delete_image_{{ image.id }}">
                             <label class="delete-image-label" for="delete_image_{{ image.id }}">Delete this image</label>
                         </div>
-                        
                     </div>
                     {% endfor %}
 

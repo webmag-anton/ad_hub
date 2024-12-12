@@ -5,6 +5,7 @@ from .models import User
 from .forms import UserProfileForm
 
 
+@login_required
 def profile_page(request):
     user = request.user
     context = {'user': user}
