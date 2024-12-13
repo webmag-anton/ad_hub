@@ -1,3 +1,5 @@
+![AdHub banner image](static/images/readme/AdHub.jpg)
+
 # **AdHub**
 
 ### The AdHub portal helps users find the necessary goods and services. All ads are categorized. Authorized users can create and edit their ads. 
