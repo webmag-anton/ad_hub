@@ -729,8 +729,14 @@ h1, h2, h3 {
 
 .ad-user__ads-btn {
     display: block;
+    width: fit-content;
     margin: 40px auto 10px;
+    padding: 6px 12px;
     font-weight: 600;
+    color: #000;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+    border-radius: 4px;
 }
 
 .ad-user__ads-btn:hover {
