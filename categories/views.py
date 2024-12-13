@@ -5,6 +5,9 @@ from .models import Category
 from ads.models import Ad
 
 
+"""
+User can open the page with a list of all categories and subcategories.
+"""
 def category_list(request):
     top_level_categories = Category.objects.filter(parent__isnull=True)
     
@@ -22,6 +25,10 @@ def category_list(request):
     return render(request, 'categories/index.html', context)
 
 
+"""
+User can open the category page with a list of all 
+ads in this category. Ads are sorted by creation date.
+"""
 def ads_by_category(request, category_name):
     category = get_object_or_404(Category, name=category_name)
     ads = Ad.objects.filter(categories=category).order_by('-created_at')

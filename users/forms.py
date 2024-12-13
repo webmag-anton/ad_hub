@@ -5,6 +5,9 @@ from allauth.account.forms import SignupForm
 from .models import User
 
 
+"""
+Form for editing own profile.
+"""
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = User
@@ -18,6 +21,9 @@ class UserProfileForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Save Profile'))
 
 
+"""
+Custom form for sugning up with possibility to attach an avatar.
+"""
 class CustomSignupForm(SignupForm):
     avatar = forms.ImageField(
         required=False, 

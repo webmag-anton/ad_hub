@@ -10,6 +10,10 @@ from users.models import User
 from .forms import AdForm, AdImageForm
 
 
+"""
+Authenticated user with authorisation can see 
+My Ads page with a list of ads sorted by creation date.
+"""
 @login_required
 def my_ads(request):
     myAds = Ad.objects.filter(user=request.user).order_by('-created_at').prefetch_related('images')
@@ -27,6 +31,9 @@ def my_ads(request):
     return render(request, 'ads/my_ads.html', context)
 
 
+"""
+Displays User Ads page with a list of user's ads sorted by creation date.
+"""
 def user_ads(request, id):
     info_user = get_object_or_404(User, id=id)
     userAds = Ad.objects.filter(user=info_user).order_by('-created_at').prefetch_related('images')
@@ -45,6 +52,9 @@ def user_ads(request, id):
     return render(request, 'ads/user_ads.html', context)    
 
 
+"""
+Displays Ad page with all information.
+"""
 def get_ad(request, slug):
     ad = get_object_or_404(Ad, slug=slug)
     existing_images = ad.images.all()
@@ -68,6 +78,10 @@ def get_ad(request, slug):
     return render(request, 'ads/index.html', context)    
 
 
+
+"""
+Authenticated user with authorisation can create ad.
+"""
 @login_required
 def create_ad(request):
     if request.method == 'POST':
@@ -105,6 +119,9 @@ def create_ad(request):
     return render(request, 'ads/index.html', context)
 
 
+"""
+Authenticated user with authorisation can delete own ad.
+"""
 @login_required
 def delete_ad(request, slug):
     ad = get_object_or_404(Ad, slug=slug)
@@ -121,6 +138,9 @@ def delete_ad(request, slug):
     return render(request, 'ads/index.html', {'ad': ad})    
 
 
+"""
+Authenticated user with authorisation can edit own ad.
+"""
 @login_required
 def edit_ad(request, slug):
     ad = get_object_or_404(Ad, slug=slug)
@@ -161,6 +181,10 @@ def edit_ad(request, slug):
     return render(request, 'ads/index.html', context)    
 
 
+"""
+User can search ads by title and description and browse 
+search result list with ads sorted by creation date.
+"""
 def search_ads(request):
     query = request.GET.get('q')
     if query:

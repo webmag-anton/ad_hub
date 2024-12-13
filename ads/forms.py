@@ -6,6 +6,9 @@ from django_summernote.widgets import SummernoteWidget
 from categories.models import Category
 
 
+"""
+Form for creating and editing own ads.
+"""
 class AdForm(forms.ModelForm):
     class Meta:
         model = Ad
@@ -22,6 +25,9 @@ class AdForm(forms.ModelForm):
         self.helper.add_input(Submit('submit', 'Create Ad'))   
      
 
+"""
+Custom widget that will remove the id attribute from all file inputs.
+"""
 class FileInputNoId(forms.ClearableFileInput):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -35,6 +41,9 @@ class FileInputNoId(forms.ClearableFileInput):
         return super().render(name, value, attrs, renderer)
 
 
+"""
+Form for attaching images to own creating an ad.
+"""
 class AdImageForm(forms.ModelForm):
     delete_image = forms.BooleanField(required=False, label='Delete this image', initial=False)
 

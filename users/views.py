@@ -5,14 +5,20 @@ from .models import User
 from .forms import UserProfileForm
 
 
+"""
+Authenticated user with authorisation can open own profile page.
+"""
 @login_required
 def profile_page(request):
     user = request.user
     context = {'user': user}
 
     return render(request, 'users/index.html', context)    
-    
 
+
+"""
+Authenticated user with authorisation can open a page to edit own profile.
+"""
 @login_required
 def edit_profile(request):
     user = request.user
