@@ -16,15 +16,14 @@ Adhub allows registered users to create ads and a profile with their phone, emai
    - [Overview](#overview)
    - [Database Planning](#entity-relationship-model)
    - [Wireframes](#wireframes)
-2. [Agile Development](#agile-development)
-   - [Kanban Board](#kanban-board)
+2. [Agile](#agile)
+   - [Kanban Project Board](#kanban-project-board)
    - [User Stories](#user-stories)
-3. [Features](#features-implemented)  
+3. [Features](#features)  
 4. [Technology Used](#technology-used) 
 5. [Testing](#testing-and-validation)   
 6. [Deployment](#deployment)
-7. [Resources](#resources)  
-8. [Credits and Acknowledgements](#credits-and-acknowledgements)
+7. [Credits and Acknowledgements](#credits-and-acknowledgements)
 
 ---
 
@@ -222,7 +221,7 @@ As a **user**, I want to **have notification after registration (also after log 
 
 ---
 
-# **Features and Responsiveness**
+# **Features**
 
 ## Home Page:
 
@@ -374,7 +373,7 @@ Adhub was tested across multiple devices in different browsers.
 
 ---
 
-## Deployment Steps:
+## Deployment:
 
 #### Creating the Heroku App
 
